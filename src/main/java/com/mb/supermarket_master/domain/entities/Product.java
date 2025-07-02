@@ -26,12 +26,12 @@ public class Product {
     private String description;
 
     @Column(nullable = false)
-    private double price;
+    private Double price;
 
     @Column(name="CATEGORY", nullable = false)
     @Enumerated(EnumType.STRING)
     private ProductCategory category;
 
     @Column
-    private int stock;
+    private Integer stock;
 }

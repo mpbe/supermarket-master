@@ -27,7 +27,18 @@ public class AdminController {
                                         @RequestBody ProductDto productDto) {
 
         return productService.fullUpdateProduct(id, productDto);
+    }
 
+
+    @GetMapping("/search/{id}")
+    public ProductDto findProductById(@PathVariable(name = "id") Long id) {
+        return productService.findProductById(id);
+    }
+
+    @PutMapping("patch_product/{id}")
+    public ProductDto partialUpdateProduct(@PathVariable(name = "id") Long id, @RequestBody ProductDto productDto) {
+        return productService.partialUpdateProduct(id, productDto);
     }
 
 }
+
