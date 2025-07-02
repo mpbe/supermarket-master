@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table
+@Table(name="PRODUCTS")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -28,7 +28,8 @@ public class Product {
     @Column(nullable = false)
     private double price;
 
-    @Column(nullable = false)
+    @Column(name="CATEGORY", nullable = false)
+    @Enumerated(EnumType.STRING)
     private ProductCategory category;
 
     @Column
