@@ -17,7 +17,7 @@ public class ProductMapperImpl implements ProductMapper {
             productDto.getDescription(),
             productDto.getPrice(),
             productDto.getCategory(),
-        0
+            productDto.getStock()
 
         );
 
@@ -31,7 +31,8 @@ public class ProductMapperImpl implements ProductMapper {
                 product.getName(),
                 product.getDescription(),
                 product.getPrice(),
-                product.getCategory()
+                product.getCategory(),
+                product.getStock()
         );
 
     }

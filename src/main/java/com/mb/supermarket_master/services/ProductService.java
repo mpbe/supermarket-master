@@ -10,4 +10,6 @@ public interface ProductService {
     ProductDto createNewProduct(ProductDto productDto);
     void deleteProduct(Long id);
     ProductDto fullUpdateProduct(Long id, ProductDto productDto);
+    ProductDto findProductById(Long id);
+    ProductDto partialUpdateProduct(Long id, ProductDto productDto);
 }

@@ -7,6 +7,7 @@ import com.mb.supermarket_master.repositories.ProductRepository;
 import com.mb.supermarket_master.services.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,6 +62,44 @@ public class ProductServiceImpl implements ProductService {
         productToUpdate.setCategory(productDto.getCategory());
 
         return productMapper.mapTo(productRepository.save(productToUpdate));
+
+    }
+
+    @Override
+    public ProductDto findProductById(Long id) {
+
+        Product product = productRepository.findById(id).orElseThrow();
+        //TODO handle not found exception
+
+        return productMapper.mapTo(product);
+
+    }
+
+    @Override
+    @Transactional
+    public ProductDto partialUpdateProduct(Long id, ProductDto productDto) {
+
+        Product productToUpdate = productRepository.findById(id).orElseThrow();
+        //todo exception
+
+        if (productDto.getName() != null) {
+            productToUpdate.setName(productDto.getName());
+        }
+        if (productDto.getCategory() != null) {
+            productToUpdate.setCategory(productDto.getCategory());
+        }
+        if (productDto.getDescription() != null) {
+            productToUpdate.setDescription(productDto.getDescription());
+        }
+        if (productDto.getPrice() != null) {
+            productToUpdate.setPrice(productDto.getPrice());
+        }
+        if (productDto.getStock() != null) {
+            productToUpdate.setStock(productDto.getStock());
+        }
+        Product savedProduct = productRepository.save(productToUpdate);
+
+        return productMapper.mapTo(savedProduct);
 
     }
 }
