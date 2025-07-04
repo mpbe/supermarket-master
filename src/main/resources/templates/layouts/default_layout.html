@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html decorate="layouts/defaultTemplate" lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Insert Title Here</title>
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+<body>
+
+<!--
+insert header
+-->
+<div th:replace="layouts/common_header :: header">Header</div>
+
+
+<!--
+main content
+-->
+<section layout:fragment="content">
+    <p>Replace this with a page that has layout:fragment="content"</p>
+</section>
+
+
+<!--
+insert footer
+-->
+<div th:replace="layouts/common_footer :: footer">Footer</div>
+
+<script src="/js/bootstrap.bundle.js"></script>
+
+</body>
+</html>
