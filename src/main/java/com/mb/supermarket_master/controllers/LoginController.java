@@ -20,7 +20,7 @@ public class LoginController {
         return "login.html";
     }
 
-    @PostMapping("/process_login")
+    @PostMapping("/processLogin")
     public String processLogin(@Valid LoginModel loginModel, BindingResult bindingResult, Model model) {
 
         if (bindingResult.hasErrors()) {

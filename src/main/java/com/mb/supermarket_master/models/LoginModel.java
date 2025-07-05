@@ -15,6 +15,7 @@ public class LoginModel {
     @NotNull(message = "username is required")
     @Size(min = 3, max = 15, message = "username must be between 3 and 15 characters")
     private String username;
+    
     @NotNull(message = "password is required")
     @Size(min = 8, max = 15, message = "password must be between 8 and 15 characters")
     private String password;
