@@ -56,4 +56,19 @@ public class AdminController {
         return "admin.html";
     }
 
+    @GetMapping("/add_new_product")
+    public String newProductForm(Model model, ProductDto productDto) {
+
+        model.addAttribute("product", productDto);
+        return "add_product.html";
+    }
+
+    @PostMapping("/add_new_product/new")
+    public String addProduct(ProductDto productDto, Model model) {
+        productService.createNewProduct(productDto);
+        List<ProductDto> productDtoList = productService.listAllProducts();
+        model.addAttribute("products", productDtoList);
+        return "admin.html";
+    }
+
 }
