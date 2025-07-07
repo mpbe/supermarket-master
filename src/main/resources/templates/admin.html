@@ -34,7 +34,7 @@
 
             <td>
 
-                <form action="#" th:action="@{/admin/delete/}" th:object="${product}" method="post">
+                <form action="#" th:action="@{/admin/delete_product}" th:object="${product}" method="get">
                     <input name="id" type="hidden" th:value="${product.id}">
                     <input name="name" type="hidden" th:value="${product.name}">
                     <input name="description" type="hidden" th:value="${product.description}">

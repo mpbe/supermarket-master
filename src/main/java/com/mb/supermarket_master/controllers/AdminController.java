@@ -5,6 +5,7 @@ import com.mb.supermarket_master.services.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,6 +45,15 @@ public class AdminController {
         model.addAttribute("products", products);
         return "admin.html";
 
+    }
+
+    @GetMapping("/delete_product")
+    public String deleteProduct(ProductDto productDto, Model model) {
+
+        productService.deleteProduct(productDto.getId());
+        List<ProductDto> products = productService.listAllProducts();
+        model.addAttribute("products", products);
+        return "admin.html";
     }
 
 }
