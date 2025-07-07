@@ -3,42 +3,47 @@ package com.mb.supermarket_master.controllers;
 import com.mb.supermarket_master.domain.dto.ProductDto;
 import com.mb.supermarket_master.services.ProductService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-@RestController
+import java.util.List;
+
+@Controller
 @RequiredArgsConstructor
 @RequestMapping("/admin")
 public class AdminController {
 
     private final ProductService productService;
 
-    @PostMapping("/new_product")
-    public ProductDto createNewProduct(@RequestBody ProductDto productDto) {
-        return productService.createNewProduct(productDto);
+    @GetMapping
+    public String listAllProducts(Model model) {
+
+        List<ProductDto> products = productService.listAllProducts();
+        model.addAttribute("products", products);
+        return "admin.html";
+
     }
 
-    @DeleteMapping("/delete_product/{id}")
-    public void deleteProductById(@PathVariable(name = "id") Long id) {
-        productService.deleteProduct(id);
+    @PostMapping("/edit_form")
+    public String editForm(ProductDto productDto, Model model) {
+
+
+        model.addAttribute("product", productDto);
+        return "edit_product.html";
     }
 
-    @PutMapping("/update_product/{id}")
-    public ProductDto fullUpdateProduct(@PathVariable(name = "id")Long id,
-                                        @RequestBody ProductDto productDto) {
+    @PostMapping("/patch_product")
+    public String patchProduct(ProductDto productDto, Model model) {
 
-        return productService.fullUpdateProduct(id, productDto);
-    }
+        productService.partialUpdateProduct(productDto.getId(), productDto);
 
+        List<ProductDto> products = productService.listAllProducts();
+        model.addAttribute("products", products);
+        return "admin.html";
 
-    @GetMapping("/search/{id}")
-    public ProductDto findProductById(@PathVariable(name = "id") Long id) {
-        return productService.findProductById(id);
-    }
-
-    @PutMapping("patch_product/{id}")
-    public ProductDto partialUpdateProduct(@PathVariable(name = "id") Long id, @RequestBody ProductDto productDto) {
-        return productService.partialUpdateProduct(id, productDto);
     }
 
 }
-
