@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layouts/default_layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Product Admin</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <h2>Product List</h2>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+            <th scope="col">Price</th>
+            <th scope="col">Category</th>
+            <th scope="col">Stock</th>
+            <th scope="col">Delete</th>
+            <th scope="col">Edit</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="product : ${products}">
+            <td th:text="${product.id}" ></td>
+            <td th:text="${product.name}" ></td>
+            <td th:text="${product.description}" ></td>
+            <td th:text="${product.price}" ></td>
+            <td th:text="${product.category}" ></td>
+            <td th:text="${product.stock}" ></td>
+
+
+            <td>
+
+                <form action="#" th:action="@{/admin/delete_product}" th:object="${product}" method="get">
+                    <input name="id" type="hidden" th:value="${product.id}">
+                    <input name="name" type="hidden" th:value="${product.name}">
+                    <input name="description" type="hidden" th:value="${product.description}">
+                    <input name="price" type="hidden" th:value="${product.price}">
+                    <input name="category" type="hidden" th:value="${product.category}">
+                    <input name="stock" type="hidden" th:value="${product.stock}">
+
+                    <button class="btn btn-danger" type="submit" name="deleteItem">Delete</button>
+                </form>
+            </td>
+
+            <td>
+                <form action="#" th:action="@{/admin/edit_form}" th:object="${product}" method="post">
+                    <input name="id" type="hidden" th:value="${product.id}">
+                    <input name="name" type="hidden" th:value="${product.name}">
+                    <input name="description" type="hidden" th:value="${product.description}">
+                    <input name="price" type="hidden" th:value="${product.price}">
+                    <input name="category" type="hidden" th:value="${product.category}">
+                    <input name="stock" type="hidden" th:value="${product.stock}">
+                    <button class="btn btn-secondary" type="submit" name="editItem">Edit</button>
+                </form>
+
+            </td>
+        </tr>
+
+
+        </tbody>
+
+    </table>
+    <div >
+        <form action="#" th:action="@{/admin/add_new_product}" method="get">
+        <button type="submit">Add New Product</button>
+        </form>
+
+    </div>
+
+    <div >
+        <form action="#" th:action="@{/admin/show_search_form}" method="get">
+            <button type="submit">Search</button>
+        </form>
+
+    </div>
+
+
+
+
+</div>
+
+</body>
+</html>

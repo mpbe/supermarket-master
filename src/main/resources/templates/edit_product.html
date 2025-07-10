@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layouts/default_layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+
+</form>
+
+    <form action="#" th:action="@{/admin/patch_product}" th:object="${product}" method="post">
+        <input type="hidden" th:field="${product.id}" name="id">
+        <div>
+            <span>Name: </span>
+            <input type="text" th:field="${product.name}" name="name">
+            <div class="fieldError">
+            </div>
+        </div>
+        <div>
+            <span>Description: </span>
+            <input type="text" th:field="${product.description}" name="description">
+            <div class="fieldError">
+            </div>
+        </div>
+        <div>
+            <span>Price: </span>
+            <input type="number" th:field="${product.price}" name="price">
+            <div class="fieldError">
+            </div>
+        </div>
+        <div>
+            <span>Category: </span>
+            <input type="text" th:field="${product.category}" name="category">
+            <div class="fieldError">
+            </div>
+        </div>
+        <div>
+            <span>Stock: </span>
+            <input type="number" th:field="${product.stock}" name="stock">
+            <div class="fieldError">
+            </div>
+        </div>
+        <div>
+            <button type="submit" class="btn btn-primary">Update</button>
+            <div th:if="${#fields.hasErrors('*')}">
+                <span th:text="${err}" class="fieldError"></span>
+            </div>
+        </div>
+    </form>
+
+
+
+</div>
+
+</body>
+</html>
