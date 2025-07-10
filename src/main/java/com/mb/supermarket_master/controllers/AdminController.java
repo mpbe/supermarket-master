@@ -1,14 +1,13 @@
 package com.mb.supermarket_master.controllers;
 
 import com.mb.supermarket_master.domain.dto.ProductDto;
+import com.mb.supermarket_master.domain.entities.ProductCategory;
+import com.mb.supermarket_master.models.SearchModel;
 import com.mb.supermarket_master.services.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -70,5 +69,30 @@ public class AdminController {
         model.addAttribute("products", productDtoList);
         return "admin.html";
     }
+
+    @GetMapping("/show_search_form")
+    public String showSearchForm(Model model, SearchModel searchModel) {
+
+        model.addAttribute("searchModel", searchModel);
+        model.addAttribute("categories", ProductCategory.values());
+        return "search_form.html";
+    }
+
+
+    @GetMapping("/search")
+    public String search(Model model, @ModelAttribute("searchModel") SearchModel searchModel) {
+        List<ProductDto> searchResults = productService.search(
+                searchModel.getSearchTerm(),
+                searchModel.getCategory(),
+                searchModel.getPriceMin(),
+                searchModel.getPriceMax()
+        );
+        model.addAttribute("categories", ProductCategory.values());
+        //named products so it will print all on the admin page
+        model.addAttribute("products", searchResults);
+        return "admin.html";
+    }
+
+
 
 }

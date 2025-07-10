@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layouts/default_layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+
+    <form th:action="@{/admin/search}" th:object="${searchModel}" method="get">
+        <input type="text" th:field="*{searchTerm}" placeholder="Search keyword" />
+
+<!--
+        select is the dropdown, option denotes one/each selectable item in the dropdown. in this case
+        all categories is the default or first field so it is first here.
+-->
+        <select th:field="*{category}">
+<!--
+            i needed to change this to "' '" as i needed to pass some kind of string to it. it wont accept empty strings
+-->
+            <option th:value="' '">All Categories</option>
+            <option th:each="category : ${categories}" th:value="${category}" th:text="${category}"></option>
+        </select>
+        <input type="number" step="0.50" th:field="*{priceMin}" placeholder="Minimum Price" />
+        <input type="number" step="0.50" th:field="*{priceMax}" placeholder="Maximum Price" />
+
+
+        <button type="submit">Search</button>
+    </form>
+
+
+
+</div>
+
+</body>
+</html>

@@ -2,6 +2,7 @@ package com.mb.supermarket_master.services.impl;
 
 import com.mb.supermarket_master.domain.dto.ProductDto;
 import com.mb.supermarket_master.domain.entities.Product;
+import com.mb.supermarket_master.domain.entities.ProductCategory;
 import com.mb.supermarket_master.mappers.ProductMapper;
 import com.mb.supermarket_master.repositories.ProductRepository;
 import com.mb.supermarket_master.services.ProductService;
@@ -11,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -102,4 +104,50 @@ public class ProductServiceImpl implements ProductService {
         return productMapper.mapTo(savedProduct);
 
     }
+
+    @Override
+    public List<ProductDto> searchByName(String name) {
+        List<Product> searchResults = productRepository.findByName(name);
+        List<ProductDto> searchResultsDto = new ArrayList<>();
+        for (Product product : searchResults) {
+            searchResultsDto.add(productMapper.mapTo(product));
+        }
+        return searchResultsDto;
+    }
+
+    @Override
+    public List<ProductDto> searchProducts(String searchTerm) {
+
+        List<Product> searchList = productRepository.findAll();
+        List<ProductDto> searchResults = new ArrayList<>();
+        for (int i = 0; i < searchList.size(); i++) {
+            if (searchList.get(i).getName().toLowerCase().contains(searchTerm.toLowerCase())) {
+                searchResults.add(productMapper.mapTo(searchList.get(i)));
+            }
+        }
+
+        /*List<Product> searchResultsStream = searchList
+                .stream()
+                .filter(product -> product.getName().toLowerCase()
+                        .contains(searchTerm.toLowerCase()))
+                .toList();
+        //want to map to dto*/
+
+
+
+        return searchResults;
+    }
+
+    @Override
+    public List<ProductDto> search(String searchTerm, ProductCategory category, Double priceMin, Double priceMax) {
+
+        List<Product> searchResults = productRepository.searchProducts(searchTerm, category, priceMin, priceMax);
+        List<ProductDto> searchResultsDto = new ArrayList<>();
+        for(Product product : searchResults) {
+            searchResultsDto.add(productMapper.mapTo(product));
+        }
+        return  searchResultsDto;
+    }
+
+
 }

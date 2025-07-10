@@ -2,6 +2,7 @@ package com.mb.supermarket_master.domain.dto;
 
 
 import com.mb.supermarket_master.domain.entities.ProductCategory;
+import jakarta.annotation.Nullable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
